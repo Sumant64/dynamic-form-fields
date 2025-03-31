@@ -83,6 +83,36 @@ const DynamicForm = () => {
     }
   };
 
+  const handleDeleteRow = (index, sectionNo) => {
+    let newFields = JSON.parse(JSON.stringify(fieldList));
+    if(index === newFields[sectionNo - 1].sectionFields.length) {
+      newFields[sectionNo - 1].sectionFields.pop()
+      setFieldList(newFields)
+    } else {
+      let newFieldArr = [];
+      for (let i = 0; i < index - 1; i++) {
+        newFieldArr.push(newFields[sectionNo - 1].sectionFields[i]);
+      }
+
+      for (
+        let i = index;
+        i < newFields[sectionNo - 1].sectionFields.length;
+        i++
+      ) {
+        newFieldArr.push({
+          index: i,
+          fieldName: newFields[sectionNo - 1].sectionFields[i].fieldName,
+          fieldType: newFields[sectionNo - 1].sectionFields[i].fieldType,
+          required: newFields[sectionNo - 1].sectionFields[i].required,
+        });
+      }
+
+      newFields[sectionNo - 1].sectionFields = newFieldArr;
+
+      setFieldList(newFields);
+    }
+  }
+
   const handleSubmit = async () => {
     try {
       console.log(fieldList);
@@ -203,6 +233,7 @@ const DynamicForm = () => {
                 fieldList={item}
                 handleChange={handleChange}
                 handleAddNewRow={handleAddNewRow}
+                handleDeleteRow={handleDeleteRow}
               />
             </>
           );

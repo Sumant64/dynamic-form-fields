@@ -12,6 +12,7 @@ import {
   TableHead,
   TableRow,
   TextField,
+  Tooltip,
 } from "@mui/material";
 import React from "react";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
@@ -38,7 +39,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const FormComponentTable = (props) => {
-  const { fieldList, handleChange, handleAddNewRow, sectionNo } = props;
+  const { fieldList, handleChange, handleAddNewRow, sectionNo, handleDeleteRow } = props;
 
   return (
     <>
@@ -107,11 +108,15 @@ const FormComponentTable = (props) => {
                     height: "100%",
                   }}
                 >
-                  <AddCircleOutlineRoundedIcon
-                    sx={{ cursor: "pointer" }}
-                    onClick={() => handleAddNewRow(field.index, sectionNo)}
-                  />
-                  <DeleteOutlineRoundedIcon sx={{ cursor: "pointer" }} />
+                  <Tooltip title={"Add new row"}>
+                    <AddCircleOutlineRoundedIcon
+                      sx={{ cursor: "pointer" }}
+                      onClick={() => handleAddNewRow(field.index, sectionNo)}
+                    />
+                  </Tooltip>
+                  {field.index !== 1 && <Tooltip title={"Delete new row"}>
+                    <DeleteOutlineRoundedIcon onClick={() => handleDeleteRow(field.index, sectionNo)} sx={{ cursor: "pointer" }} />
+                  </Tooltip>}
                 </Box>
               </StyledTableCell>
             </StyledTableRow>
