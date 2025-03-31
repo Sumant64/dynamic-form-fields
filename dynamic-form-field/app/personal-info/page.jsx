@@ -21,47 +21,38 @@ const PersonalInfo = () => {
     <>
       <Typography variant="h3">Personal Info</Typography>
 
-      <Grid container columns={12} spacing={2}>
-        {formConfig.map((item) => (
-          <Grid size={3}>
-            {(item.fieldType === "text" || item.fieldType === "date") && (
-              <TextField
-                size="small"
-                fullWidth
-                name={item.fieldName}
-                label={item.fieldName}
-                required={item.required === "true" ? true : false}
-                InputLabelProps={{
-                  shrink: item.fieldType === "date" || formValues[item.fieldName] && true, // Keeps the label at the top
-                }}
-                type={item.fieldType}
-                value={
-                  formValues[item.fieldName] ? formValues[item.fieldName] : ""
-                }
-                onChange={handleChange}
-              />
-            )}
-            {/* {item.fieldType === "date" && (
-              <TextField
-                size="small"
-                fullWidth
-                name={item.fieldName}
-                label={item.fieldName}
-                InputLabelProps={{
-                  shrink: true, // Keeps the label at the top
-                }}
-                required={item.required === "true" ? true : false}
-                type={item.fieldType}
-                value={
-                  formValues[item.fieldName] ? formValues[item.fieldName] : ""
-                }
-                onChange={handleChange}
-              />
-            )} */}
-
+      {formConfig.map((item) => (
+        <Box sx={{paddingTop: '2rem'}}>
+          <Typography variant="h6" sx={{paddingBottom: '1rem', textDecoration: 'underline'}}>{item.sectionName}</Typography>
+          <Grid container columns={12} spacing={2}>
+          {
+            item.sectionFields && item.sectionFields.map((field) => (
+              <Grid size={3}>
+                {(field.fieldType === "text" || field.fieldType === "date") && (
+                  <TextField
+                    size="small"
+                    fullWidth
+                    name={field.fieldName}
+                    label={field.fieldName}
+                    required={field.required === "true" ? true : false}
+                    InputLabelProps={{
+                      shrink:
+                      field.fieldType === "date" ||
+                        (formValues[field.fieldName] && true), // Keeps the label at the top
+                    }}
+                    type={field.fieldType}
+                    value={
+                      formValues[field.fieldName] ? formValues[field.fieldName] : ""
+                    }
+                    onChange={handleChange}
+                  />
+                )}
+              </Grid>
+            ))
+          }
           </Grid>
-        ))}
-      </Grid>
+        </Box>
+      ))}
 
       <Box sx={{ marginTop: "1rem" }}>
         <Button variant="contained" onClick={() => handleSubmit()}>
