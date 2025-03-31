@@ -1,6 +1,12 @@
 import {
   Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   FormControl,
+  IconButton,
   InputLabel,
   MenuItem,
   Select,
@@ -13,10 +19,13 @@ import {
   TableRow,
   TextField,
   Tooltip,
+  Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
+import EditNoteOutlinedIcon from "@mui/icons-material/EditNoteOutlined";
+import CloseIcon from "@mui/icons-material/Close";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,6 +47,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+const CustomDialog = styled(Dialog)(({ theme }) => ({
+  "& .MuiDialogContent-root": {
+    padding: theme.spacing(2),
+  },
+  "& .MuiDialogActions-root": {
+    padding: theme.spacing(1),
+  },
+}));
+
 const FormComponentTable = (props) => {
   const {
     fieldList,
@@ -45,10 +63,92 @@ const FormComponentTable = (props) => {
     handleAddNewRow,
     sectionNo,
     handleDeleteRow,
+    handleSaveDropdown,
   } = props;
+  const [openDialog, setOpenDialog] = useState({
+    open: false,
+    index: 0,
+    sectionNo: 0,
+    data: [{
+      index: 1, 
+      value: ''
+    }],
+  });
+
+  const handleDropdownChange = (item, index, event) => {
+    let dataArr = JSON.parse(JSON.stringify(openDialog));
+    dataArr.data[index - 1].value = event.target.value
+    setOpenDialog(dataArr)
+  }
+
+  const handleAddDropdown = (index) => {
+    let dataObj = JSON.parse(JSON.stringify(openDialog));
+    if(index === dataObj.data.length) {
+      dataObj.data.push({
+        index: index + 1, 
+        value: ''
+      })
+      setOpenDialog(dataObj);
+    } else {
+      
+    }
+  }
+
+  const handleDeleteDropdown = () => {
+
+  }
 
   return (
     <>
+      {/* Dropdown dialog */}
+      <Dialog
+        open={openDialog.open}
+        onClose={() => setOpenDialog({ open: false, index: 0, sectionNo: 0 })}
+      >
+        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+          Add Dropdown
+        </DialogTitle>
+        <IconButton
+          aria-label="close"
+          onClick={() => setOpenDialog({ open: false, index: 0, sectionNo: 0 })}
+          sx={(theme) => ({
+            position: "absolute",
+            right: 8,
+            top: 8,
+            color: theme.palette.grey[500],
+          })}
+        >
+          <CloseIcon />
+        </IconButton>
+        <DialogContent dividers>
+          {openDialog.data &&
+            openDialog.data.map((item, index) => (
+              <Box key={index}>
+                <TextField size="small" value={item.value} onChange={(event) => handleDropdownChange(item, item.index, event)} />
+                <Tooltip title={"Add new row"}>
+                  <AddCircleOutlineRoundedIcon
+                    sx={{ cursor: "pointer" }}
+                    onClick={() => handleAddDropdown(item.index)}
+                  />
+                </Tooltip>
+                {item.index !== 1 && (
+                  <Tooltip title={"Delete new row"}>
+                    <DeleteOutlineRoundedIcon
+                      onClick={() => handleDeleteDropdown(field.index, sectionNo)}
+                      sx={{ cursor: "pointer" }}
+                    />
+                  </Tooltip>
+                )}
+              </Box>
+            ))}
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" autoFocus onClick={() => handleSaveDropdown(openDialog)}>
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <TableContainer sx={{ marginTop: "1rem" }}>
         <TableHead>
           <TableRow>
@@ -60,6 +160,7 @@ const FormComponentTable = (props) => {
             <StyledTableCell width={200} align="center">
               Action
             </StyledTableCell>
+            <StyledTableCell width={200}>Dropdown Items</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -94,6 +195,7 @@ const FormComponentTable = (props) => {
                     >
                       <MenuItem value="text">Text</MenuItem>
                       <MenuItem value="number">Number</MenuItem>
+                      <MenuItem value="dropdown">Dropdown</MenuItem>
                     </Select>
                   </FormControl>
                 </StyledTableCell>
@@ -134,7 +236,9 @@ const FormComponentTable = (props) => {
                       <MenuItem value="name">Name Field</MenuItem>
                       <MenuItem value="onlyCharacter">Only Characters</MenuItem>
                       <MenuItem value="onlyNumber">Only Numbers</MenuItem>
-                      <MenuItem value="characterNumber">Characters + Numbers</MenuItem>
+                      <MenuItem value="characterNumber">
+                        Characters + Numbers
+                      </MenuItem>
                       <MenuItem value="phone">Phone</MenuItem>
                       <MenuItem value="email">Email</MenuItem>
                       <MenuItem value="adhar">Adhar</MenuItem>
@@ -167,6 +271,32 @@ const FormComponentTable = (props) => {
                       </Tooltip>
                     )}
                   </Box>
+                </StyledTableCell>
+
+                {/* Dropdown Items */}
+                <StyledTableCell>
+                  {field.fieldType === "dropdown" && (
+                    <Box
+                      sx={{
+                        position: "relative",
+                        left: "1rem",
+                      }}
+                    >
+                      <Tooltip title={"Add Dropdown Items"}>
+                        <EditNoteOutlinedIcon
+                          sx={{ cursor: "pointer" }}
+                          onClick={() => {
+                            setOpenDialog({
+                              open: true,
+                              index: field.index,
+                              sectionNo: sectionNo,
+                              data: field.dropdownValues,
+                            });
+                          }}
+                        />
+                      </Tooltip>
+                    </Box>
+                  )}
                 </StyledTableCell>
               </StyledTableRow>
             ))}

@@ -27,6 +27,12 @@ const DynamicForm = () => {
           fieldType: "",
           required: "false",
           authentication: "none",
+          dropdownValues: [
+            {
+              index: 1,
+              value: ''
+            }
+          ]
         },
       ],
     },
@@ -46,6 +52,12 @@ const DynamicForm = () => {
         fieldName: "",
         fieldType: "",
         required: "false",
+        dropdownValues: [
+            {
+              index: 1,
+              value: ''
+            }
+          ]
       });
       setFieldList(newFields);
     } else {
@@ -62,6 +74,12 @@ const DynamicForm = () => {
         fieldName: "",
         fieldType: "",
         required: "false",
+        dropdownValues: [
+            {
+              index: 1,
+              value: ''
+            }
+          ]
       });
       // count += 1;
 
@@ -75,6 +93,7 @@ const DynamicForm = () => {
           fieldName: newFields[sectionNo - 1].sectionFields[i].fieldName,
           fieldType: newFields[sectionNo - 1].sectionFields[i].fieldType,
           required: newFields[sectionNo - 1].sectionFields[i].required,
+          dropdownValues: newFields[sectionNo - 1].sectionFields[i].dropdownValues,
         });
       }
 
@@ -185,6 +204,10 @@ const DynamicForm = () => {
     }
   };
 
+  const handleSaveDropdown = () => {
+    
+  }
+
   return (
     <>
       <Typography>Dynamic Form</Typography>
@@ -235,6 +258,7 @@ const DynamicForm = () => {
                 handleChange={handleChange}
                 handleAddNewRow={handleAddNewRow}
                 handleDeleteRow={handleDeleteRow}
+                handleSaveDropdown={handleSaveDropdown}
               />
             </>
           );
