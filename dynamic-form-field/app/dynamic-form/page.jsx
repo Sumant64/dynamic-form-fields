@@ -26,6 +26,7 @@ const DynamicForm = () => {
           fieldName: "",
           fieldType: "",
           required: "false",
+          authentication: "none",
         },
       ],
     },

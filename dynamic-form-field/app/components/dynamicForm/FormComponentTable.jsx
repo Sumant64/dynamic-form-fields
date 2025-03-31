@@ -1,5 +1,5 @@
 import {
-    Box,
+  Box,
   FormControl,
   InputLabel,
   MenuItem,
@@ -39,7 +39,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const FormComponentTable = (props) => {
-  const { fieldList, handleChange, handleAddNewRow, sectionNo, handleDeleteRow } = props;
+  const {
+    fieldList,
+    handleChange,
+    handleAddNewRow,
+    sectionNo,
+    handleDeleteRow,
+  } = props;
 
   return (
     <>
@@ -50,77 +56,120 @@ const FormComponentTable = (props) => {
             <StyledTableCell width={200}>Field Name</StyledTableCell>
             <StyledTableCell width={200}>Field Type</StyledTableCell>
             <StyledTableCell width={200}>Required</StyledTableCell>
-            <StyledTableCell width={200} align="center">Action</StyledTableCell>
+            <StyledTableCell width={200}>Authentication</StyledTableCell>
+            <StyledTableCell width={200} align="center">
+              Action
+            </StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {fieldList.sectionFields && fieldList.sectionFields.map((field, index) => (
-            <StyledTableRow key={index}>
-              <StyledTableCell>{field.index}</StyledTableCell>
-              <StyledTableCell>
-                <TextField
-                  size="small"
-                  fullWidth
-                  label="Field Name"
-                  name="fieldName"
-                  value={field.fieldName}
-                  onChange={(event) => handleChange(event, field.index, sectionNo)}
-                />
-              </StyledTableCell>
-              <StyledTableCell>
-                <FormControl size="small" fullWidth>
-                  <InputLabel id="demo-simple-select-label">
-                    Select Form Type
-                  </InputLabel>
-                  <Select
-                    name="fieldType"
-                    value={field.fieldType}
-                    label="Select Form Type"
-                    onChange={(event) => handleChange(event, field.index, sectionNo)}
+          {fieldList.sectionFields &&
+            fieldList.sectionFields.map((field, index) => (
+              <StyledTableRow key={index}>
+                <StyledTableCell>{field.index}</StyledTableCell>
+                <StyledTableCell>
+                  <TextField
+                    size="small"
+                    fullWidth
+                    label="Field Name"
+                    name="fieldName"
+                    value={field.fieldName}
+                    onChange={(event) =>
+                      handleChange(event, field.index, sectionNo)
+                    }
+                  />
+                </StyledTableCell>
+                <StyledTableCell>
+                  <FormControl size="small" fullWidth>
+                    <InputLabel id="demo-simple-select-label">
+                      Select Form Type
+                    </InputLabel>
+                    <Select
+                      name="fieldType"
+                      value={field.fieldType}
+                      label="Select Form Type"
+                      onChange={(event) =>
+                        handleChange(event, field.index, sectionNo)
+                      }
+                    >
+                      <MenuItem value="text">Text</MenuItem>
+                      <MenuItem value="number">Number</MenuItem>
+                    </Select>
+                  </FormControl>
+                </StyledTableCell>
+                <StyledTableCell>
+                  <FormControl size="small" fullWidth>
+                    <InputLabel id="demo-simple-select-label">
+                      Required
+                    </InputLabel>
+                    <Select
+                      name="required"
+                      value={field.required}
+                      label="Select Required"
+                      onChange={(event) =>
+                        handleChange(event, field.index, sectionNo)
+                      }
+                    >
+                      <MenuItem value="true">YES</MenuItem>
+                      <MenuItem value="false">NO</MenuItem>
+                    </Select>
+                  </FormControl>
+                </StyledTableCell>
+
+                {/* Authentication */}
+                <StyledTableCell>
+                  <FormControl size="small" fullWidth>
+                    <InputLabel id="demo-simple-select-label">
+                      Select Authentication
+                    </InputLabel>
+                    <Select
+                      name="authentication"
+                      value={field.authentication}
+                      label="Select Authentication"
+                      onChange={(event) =>
+                        handleChange(event, field.index, sectionNo)
+                      }
+                    >
+                      <MenuItem value="none">None</MenuItem>
+                      <MenuItem value="name">Name Field</MenuItem>
+                      <MenuItem value="onlyCharacter">Only Characters</MenuItem>
+                      <MenuItem value="onlyNumber">Only Numbers</MenuItem>
+                      <MenuItem value="characterNumber">Characters + Numbers</MenuItem>
+                      <MenuItem value="phone">Phone</MenuItem>
+                      <MenuItem value="email">Email</MenuItem>
+                      <MenuItem value="adhar">Adhar</MenuItem>
+                    </Select>
+                  </FormControl>
+                </StyledTableCell>
+                <StyledTableCell>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-evenly",
+                      alignItems: "center",
+                      height: "100%",
+                    }}
                   >
-                    <MenuItem value="text">Text</MenuItem>
-                    <MenuItem value="number">Number</MenuItem>
-                  </Select>
-                </FormControl>
-              </StyledTableCell>
-              <StyledTableCell>
-                <FormControl size="small" fullWidth>
-                  <InputLabel id="demo-simple-select-label">
-                    Required
-                  </InputLabel>
-                  <Select
-                    name="required"
-                    value={field.required}
-                    label="Select Required"
-                    onChange={(event) => handleChange(event, field.index, sectionNo)}
-                  >
-                    <MenuItem value="true">YES</MenuItem>
-                    <MenuItem value="false">NO</MenuItem>
-                  </Select>
-                </FormControl>
-              </StyledTableCell>
-              <StyledTableCell>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-evenly",
-                    alignItems: "center",
-                    height: "100%",
-                  }}
-                >
-                  <Tooltip title={"Add new row"}>
-                    <AddCircleOutlineRoundedIcon
-                      sx={{ cursor: "pointer" }}
-                      onClick={() => handleAddNewRow(field.index, sectionNo)}
-                    />
-                  </Tooltip>
-                  {field.index !== 1 && <Tooltip title={"Delete new row"}>
-                    <DeleteOutlineRoundedIcon onClick={() => handleDeleteRow(field.index, sectionNo)} sx={{ cursor: "pointer" }} />
-                  </Tooltip>}
-                </Box>
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
+                    <Tooltip title={"Add new row"}>
+                      <AddCircleOutlineRoundedIcon
+                        sx={{ cursor: "pointer" }}
+                        onClick={() => handleAddNewRow(field.index, sectionNo)}
+                      />
+                    </Tooltip>
+                    {field.index !== 1 && (
+                      <Tooltip title={"Delete new row"}>
+                        <DeleteOutlineRoundedIcon
+                          onClick={() =>
+                            handleDeleteRow(field.index, sectionNo)
+                          }
+                          sx={{ cursor: "pointer" }}
+                        />
+                      </Tooltip>
+                    )}
+                  </Box>
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
         </TableBody>
       </TableContainer>
     </>
