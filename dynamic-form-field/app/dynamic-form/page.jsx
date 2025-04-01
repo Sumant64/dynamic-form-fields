@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -14,7 +14,7 @@ import FormComponent from "../components/dynamicForm/FormComponent";
 import FormComponentTable from "../components/dynamicForm/FormComponentTable";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
-import { postConfigForm } from "@/services/api";
+import { getConfigForm, postConfigForm } from "@/services/api";
 
 const DynamicForm = () => {
   const [fieldList, setFieldList] = useState([
@@ -31,17 +31,35 @@ const DynamicForm = () => {
           dropdownValues: [
             {
               index: 1,
-              value: ''
-            }
-          ]
+              value: "",
+            },
+          ],
         },
       ],
     },
   ]);
+  const [loading, setLoading] = useState('loading');
+
+  useEffect(() => {
+    initialLoad();
+  }, []);
+
+  const initialLoad = async () => {
+    try {
+      const res = await getConfigForm();
+      let data = res.data.result[0];
+      setFieldList(data.formConfig);
+      setLoading("");
+    } catch (err) {
+      console.log(err);
+      setLoading("networkError");
+    }
+  };
 
   const handleChange = (event, index, sectionNo) => {
     let newFields = JSON.parse(JSON.stringify(fieldList));
-    newFields[sectionNo - 1].sectionFields[index - 1][event.target.name] = event.target.value;
+    newFields[sectionNo - 1].sectionFields[index - 1][event.target.name] =
+      event.target.value;
     setFieldList(newFields);
   };
 
@@ -54,11 +72,11 @@ const DynamicForm = () => {
         fieldType: "",
         required: "false",
         dropdownValues: [
-            {
-              index: 1,
-              value: ''
-            }
-          ]
+          {
+            index: 1,
+            value: "",
+          },
+        ],
       });
       setFieldList(newFields);
     } else {
@@ -76,11 +94,11 @@ const DynamicForm = () => {
         fieldType: "",
         required: "false",
         dropdownValues: [
-            {
-              index: 1,
-              value: ''
-            }
-          ]
+          {
+            index: 1,
+            value: "",
+          },
+        ],
       });
       // count += 1;
 
@@ -94,7 +112,8 @@ const DynamicForm = () => {
           fieldName: newFields[sectionNo - 1].sectionFields[i].fieldName,
           fieldType: newFields[sectionNo - 1].sectionFields[i].fieldType,
           required: newFields[sectionNo - 1].sectionFields[i].required,
-          dropdownValues: newFields[sectionNo - 1].sectionFields[i].dropdownValues,
+          dropdownValues:
+            newFields[sectionNo - 1].sectionFields[i].dropdownValues,
         });
       }
 
@@ -106,9 +125,9 @@ const DynamicForm = () => {
 
   const handleDeleteRow = (index, sectionNo) => {
     let newFields = JSON.parse(JSON.stringify(fieldList));
-    if(index === newFields[sectionNo - 1].sectionFields.length) {
-      newFields[sectionNo - 1].sectionFields.pop()
-      setFieldList(newFields)
+    if (index === newFields[sectionNo - 1].sectionFields.length) {
+      newFields[sectionNo - 1].sectionFields.pop();
+      setFieldList(newFields);
     } else {
       let newFieldArr = [];
       for (let i = 0; i < index - 1; i++) {
@@ -132,13 +151,13 @@ const DynamicForm = () => {
 
       setFieldList(newFields);
     }
-  }
+  };
 
   const handleSubmit = async () => {
     try {
       console.log(fieldList);
       const res = await postConfigForm(fieldList);
-      console.log(res)
+      console.log(res);
     } catch (err) {
       console.log(err);
     }
@@ -190,18 +209,12 @@ const DynamicForm = () => {
       });
       // count += 1;
 
-      for (
-        let i = count;
-        i < newFields.length;
-        i++
-      ) {
-        newFieldArr.push(
-          {
-            sectionNo: i + 2,
-            sectionName: newFields[i].sectionName,
-            sectionFields: newFields[i].sectionFields
-          },
-        );
+      for (let i = count; i < newFields.length; i++) {
+        newFieldArr.push({
+          sectionNo: i + 2,
+          sectionName: newFields[i].sectionName,
+          sectionFields: newFields[i].sectionFields,
+        });
       }
       setFieldList(newFieldArr);
     }
@@ -209,35 +222,29 @@ const DynamicForm = () => {
 
   const handleRemoveSection = (sectionNo, item) => {
     let newFields = JSON.parse(JSON.stringify(fieldList));
-    if(sectionNo === newFields.length) {
-      newFields.pop()
+    if (sectionNo === newFields.length) {
+      newFields.pop();
 
-      setFieldList(newFields)
+      setFieldList(newFields);
     } else {
       let newFieldArr = [];
       for (let i = 0; i < sectionNo - 1; i++) {
         newFieldArr.push(newFields[i]);
       }
 
-      for (
-        let i = sectionNo;
-        i < newFields.length;
-        i++
-      ) {
+      for (let i = sectionNo; i < newFields.length; i++) {
         newFieldArr.push({
           sectionNo: i,
           sectionName: newFields[i].sectionName,
-          sectionFields: newFields[i].sectionFields
+          sectionFields: newFields[i].sectionFields,
         });
       }
 
       setFieldList(newFieldArr);
     }
-  }
+  };
 
-  const handleSaveDropdown = () => {
-    
-  }
+  const handleSaveDropdown = () => {};
 
   return (
     <>
@@ -251,11 +258,11 @@ const DynamicForm = () => {
         ))
       } */}
       <Box sx={{ marginTop: "2rem" }}>
-        {fieldList.map((item) => {
+        {loading === "" && fieldList.map((item) => {
           return (
             <>
-              <Divider sx={{margin: '1rem'}} />
-              <Box sx={{ display: "flex", width: "100%", marginTop: '2rem' }}>
+              <Divider sx={{ margin: "1rem" }} />
+              <Box sx={{ display: "flex", width: "100%", marginTop: "2rem" }}>
                 <TextField
                   name="sectionName"
                   label="Section Name"
@@ -279,7 +286,10 @@ const DynamicForm = () => {
                     />
                   </Tooltip>
                   <Tooltip title={"Delete Section"}>
-                    <DeleteOutlineRoundedIcon onClick={() => handleRemoveSection(item.sectionNo, item)} sx={{ cursor: "pointer" }} />
+                    <DeleteOutlineRoundedIcon
+                      onClick={() => handleRemoveSection(item.sectionNo, item)}
+                      sx={{ cursor: "pointer" }}
+                    />
                   </Tooltip>
                 </Box>
               </Box>

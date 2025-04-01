@@ -10,5 +10,9 @@ const config = {
 
 export const postConfigForm = (payload) => {
 
-    axios.post(`${baseUrl}/api/config`, payload, config);
+    return axios.post(`${baseUrl}/api/config`, payload, config);
 }
+
+export const getConfigForm = () => {
+    return axios.get(`${baseUrl}/api/config`, config)
+} 

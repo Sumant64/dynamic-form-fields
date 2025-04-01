@@ -1,11 +1,29 @@
 "use client";
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { dynamicData } from "../components/sampelObject";
+import { getConfigForm } from "@/services/api";
 
 const PersonalInfo = () => {
-  const [formConfig, setFormConfig] = useState([...dynamicData]);
+  const [formConfig, setFormConfig] = useState([]);
+  const [loading, setLoading] = useState('loading');
   const [formValues, setFormValues] = useState({});
+
+  useEffect(() => {
+    initialLoad();
+  }, [])
+
+  const initialLoad = async() => {
+    try{
+      const res = await getConfigForm();
+      let data = res.data.result[0];
+      setFormConfig(data.formConfig)
+      setLoading('')
+    } catch(err) {
+      console.log(err);
+      setLoading('networkError')
+    }
+  }
 
   const handleChange = (event) => {
     let values = JSON.parse(JSON.stringify(formValues));
@@ -21,7 +39,7 @@ const PersonalInfo = () => {
     <>
       <Typography variant="h3">Personal Info</Typography>
 
-      {formConfig.map((item) => (
+      {loading === '' && formConfig.length > 0 && formConfig.map((item) => (
         <Box sx={{paddingTop: '2rem'}}>
           <Typography variant="h6" sx={{paddingBottom: '1rem', textDecoration: 'underline'}}>{item.sectionName}</Typography>
           <Grid container columns={12} spacing={2}>
