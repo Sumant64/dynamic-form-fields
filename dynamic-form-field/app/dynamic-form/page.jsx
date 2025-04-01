@@ -204,6 +204,34 @@ const DynamicForm = () => {
     }
   };
 
+  const handleRemoveSection = (sectionNo, item) => {
+    let newFields = JSON.parse(JSON.stringify(fieldList));
+    if(sectionNo === newFields.length) {
+      newFields.pop()
+
+      setFieldList(newFields)
+    } else {
+      let newFieldArr = [];
+      for (let i = 0; i < sectionNo - 1; i++) {
+        newFieldArr.push(newFields[i]);
+      }
+
+      for (
+        let i = sectionNo;
+        i < newFields.length;
+        i++
+      ) {
+        newFieldArr.push({
+          sectionNo: i,
+          sectionName: newFields[i].sectionName,
+          sectionFields: newFields[i].sectionFields
+        });
+      }
+
+      setFieldList(newFieldArr);
+    }
+  }
+
   const handleSaveDropdown = () => {
     
   }
@@ -248,7 +276,7 @@ const DynamicForm = () => {
                     />
                   </Tooltip>
                   <Tooltip title={"Delete Section"}>
-                    <DeleteOutlineRoundedIcon sx={{ cursor: "pointer" }} />
+                    <DeleteOutlineRoundedIcon onClick={() => handleRemoveSection(item.sectionNo, item)} sx={{ cursor: "pointer" }} />
                   </Tooltip>
                 </Box>
               </Box>
