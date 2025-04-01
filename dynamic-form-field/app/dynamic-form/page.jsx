@@ -14,6 +14,7 @@ import FormComponent from "../components/dynamicForm/FormComponent";
 import FormComponentTable from "../components/dynamicForm/FormComponentTable";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
+import { postConfigForm } from "@/services/api";
 
 const DynamicForm = () => {
   const [fieldList, setFieldList] = useState([
@@ -136,6 +137,8 @@ const DynamicForm = () => {
   const handleSubmit = async () => {
     try {
       console.log(fieldList);
+      const res = await postConfigForm(fieldList);
+      console.log(res)
     } catch (err) {
       console.log(err);
     }
