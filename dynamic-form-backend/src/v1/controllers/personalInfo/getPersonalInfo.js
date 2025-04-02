@@ -1,6 +1,6 @@
 const PersonalInfo = require("../../models/personalInfoModal");
 
-// @desc - post personal info
+// @desc - get personal info
 // @route - GET - /api/personal-info
 // api/personal-info?row-per-page=10&page=2&sort=<id>-<asc/dec>&search=<search>
 // @access - public
