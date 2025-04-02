@@ -16,3 +16,7 @@ export const postConfigForm = (payload) => {
 export const getConfigForm = () => {
     return axios.get(`${baseUrl}/api/config`, config)
 } 
+
+export const postPersonalInfo = (payload) => {
+  return axios.post(`${baseUrl}/api/personal-info`, payload, config)
+}

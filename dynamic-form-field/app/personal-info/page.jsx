@@ -2,7 +2,7 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { dynamicData } from "../components/sampelObject";
-import { getConfigForm } from "@/services/api";
+import { getConfigForm, postPersonalInfo } from "@/services/api";
 
 const PersonalInfo = () => {
   const [formConfig, setFormConfig] = useState([]);
@@ -31,8 +31,14 @@ const PersonalInfo = () => {
     setFormValues(values);
   };
 
-  const handleSubmit = () => {
-    console.log(formValues);
+  const handleSubmit = async() => {
+    try{
+      console.log(formValues);
+      const res = await postPersonalInfo(formValues);
+
+    } catch(err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -50,7 +56,7 @@ const PersonalInfo = () => {
                   <TextField
                     size="small"
                     fullWidth
-                    name={field.fieldName}
+                    name={field._id}
                     label={field.fieldName}
                     required={field.required === "true" ? true : false}
                     InputLabelProps={{
@@ -60,7 +66,7 @@ const PersonalInfo = () => {
                     }}
                     type={field.fieldType}
                     value={
-                      formValues[field.fieldName] ? formValues[field.fieldName] : ""
+                      formValues[field._id] ? formValues[field._id] : ""
                     }
                     onChange={handleChange}
                   />
