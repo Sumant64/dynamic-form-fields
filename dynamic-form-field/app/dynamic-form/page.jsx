@@ -73,15 +73,16 @@ const DynamicForm = () => {
   const [loading, setLoading] = useState('loading');
 
   useEffect(() => {
-    // initialLoad();
-    setLoading('')
+    initialLoad();
   }, []);
 
   const initialLoad = async () => {
     try {
       const res = await getConfigForm();
       let data = res.data.result[0];
-      setFieldList(data.formConfig);
+      if(data?.formConfig.length > 0) {
+        setFieldList(data.formConfig);
+      }
       setLoading("");
     } catch (err) {
       console.log(err);
