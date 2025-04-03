@@ -29,7 +29,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: '#6c757d',
     color: theme.palette.common.white,
     padding: "5px",
   },
@@ -75,10 +75,10 @@ const style = {
             height: '40px',
           },
           '&:hover fieldset': {
-            borderColor: 'green', // Border color on hover
+            borderColor: '#90a955', // Border color on hover
           },
           '&.Mui-focused fieldset': {
-            borderColor: 'red', // Border color when focused
+            borderColor: '#f27059', // Border color when focused
           },
         },
         // '& .MuiInputLabel-root': {
@@ -302,7 +302,7 @@ const FormComponentTable = (props) => {
                   >
                     <Tooltip title={"Add new row"}>
                       <AddCircleOutlineRoundedIcon
-                        sx={{ cursor: "pointer" }}
+                        sx={{ cursor: "pointer", color: '#90a955' }}
                         onClick={() => handleAddNewRow(field.index, sectionNo)}
                       />
                     </Tooltip>
@@ -312,7 +312,7 @@ const FormComponentTable = (props) => {
                           onClick={() =>
                             handleDeleteRow(field.index, sectionNo)
                           }
-                          sx={{ cursor: "pointer" }}
+                          sx={{ cursor: "pointer", color: '#f27059' }}
                         />
                       </Tooltip>
                     )}

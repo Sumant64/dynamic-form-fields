@@ -280,7 +280,7 @@ const DynamicForm = () => {
   const handleSaveDropdown = () => {};
 
   return (
-    <>
+    <Box>
       <Typography>Dynamic Form</Typography>
 
       {/* {
@@ -293,7 +293,7 @@ const DynamicForm = () => {
       <Box sx={{ marginTop: "2rem" }}>
         {loading === "" && fieldList.map((item) => {
           return (
-            <Box sx={{border: '1px solid grey', padding: '2rem', margin: '2rem', borderRadius: '20px'}}>
+            <Box sx={{border: '1px solid #f27059', padding: '2rem', margin: '2rem', borderRadius: '20px', backgroundColor: 'white'}}>
               <Box sx={{ display: "flex", width: "100%"}}>
                 <TextField
                   size="small"
@@ -315,14 +315,14 @@ const DynamicForm = () => {
                 >
                   <Tooltip title={"Add Section"}>
                     <AddCircleOutlineRoundedIcon
-                      sx={{ cursor: "pointer" }}
+                      sx={{ cursor: "pointer", color: '#90a955' }}
                       onClick={() => handleAddSection(item.sectionNo, item)}
                     />
                   </Tooltip>
                   <Tooltip title={"Delete Section"}>
                     <DeleteOutlineRoundedIcon
                       onClick={() => handleRemoveSection(item.sectionNo, item)}
-                      sx={{ cursor: "pointer" }}
+                      sx={{ cursor: "pointer", color: '#f27059' }}
                     />
                   </Tooltip>
                 </Box>
@@ -345,7 +345,7 @@ const DynamicForm = () => {
           Submit
         </Button>
       </Box>
-    </>
+    </Box>
   );
 };
 
