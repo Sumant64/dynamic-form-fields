@@ -11,6 +11,7 @@ import {
   MenuItem,
   Select,
   styled,
+  Table,
   TableBody,
   TableCell,
   tableCellClasses,
@@ -195,17 +196,19 @@ const FormComponentTable = (props) => {
       </Dialog>
 
       <TableContainer sx={{ marginTop: "1rem" }}>
+      <Table sx={{ minWidth: 1000 }} aria-label="customized table">
+
         <TableHead>
           <TableRow>
-            <StyledTableCell width={50}>Index</StyledTableCell>
-            <StyledTableCell width={200}>Field Name</StyledTableCell>
-            <StyledTableCell width={200}>Field Type</StyledTableCell>
-            <StyledTableCell width={200}>Required</StyledTableCell>
-            <StyledTableCell width={200}>Authentication</StyledTableCell>
-            <StyledTableCell width={200} align="center">
+            <StyledTableCell sx={{minWidth: '50px'}} width={50}>Index</StyledTableCell>
+            <StyledTableCell sx={{minWidth: '150px'}} width={200}>Field Name</StyledTableCell>
+            <StyledTableCell sx={{minWidth: '150px'}} width={200}>Field Type</StyledTableCell>
+            <StyledTableCell sx={{minWidth: '150px'}} width={200}>Required</StyledTableCell>
+            <StyledTableCell sx={{minWidth: '150px'}} width={200}>Authentication</StyledTableCell>
+            <StyledTableCell sx={{minWidth: '150px'}} width={200} align="center">
               Action
             </StyledTableCell>
-            <StyledTableCell width={200}>Dropdown Items</StyledTableCell>
+            <StyledTableCell sx={{minWidth: '150px'}} width={200}>Dropdown Items</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -347,6 +350,7 @@ const FormComponentTable = (props) => {
               </StyledTableRow>
             ))}
         </TableBody>
+      </Table>
       </TableContainer>
     </>
   );
