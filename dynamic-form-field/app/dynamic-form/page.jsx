@@ -341,7 +341,7 @@ const DynamicForm = () => {
       </Box>
 
       <Box sx={{ marginTop: "1rem" }}>
-        <Button variant="contained" onClick={() => handleSubmit()}>
+        <Button variant="contained" sx={{backgroundColor: '#1e6091', marginLeft: '2rem'}} onClick={() => handleSubmit()}>
           Submit
         </Button>
       </Box>

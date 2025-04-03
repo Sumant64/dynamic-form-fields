@@ -29,7 +29,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: '#6c757d',
+    backgroundColor: '#1e6091',
     color: theme.palette.common.white,
     padding: "5px",
   },
