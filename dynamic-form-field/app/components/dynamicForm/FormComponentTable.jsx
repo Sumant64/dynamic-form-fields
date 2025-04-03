@@ -31,9 +31,11 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
+    padding: "5px",
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+    fontSize: 12,
+    padding: "5px",
   },
 }));
 
@@ -56,6 +58,38 @@ const CustomDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
+const style = {
+  textField: {
+    '& .MuiInputBase-root': {
+          borderRadius: '10px', // Border radius
+          height: '40px',
+          padding: '0px',
+          margin: '0px',
+          fontSize: '14px'
+
+        },
+        '& .MuiOutlinedInput-root': {
+          '& fieldset': {
+            // borderColor: 'blue', // Change border color
+            margin: '0px',
+            height: '40px',
+          },
+          '&:hover fieldset': {
+            borderColor: 'green', // Border color on hover
+          },
+          '&.Mui-focused fieldset': {
+            borderColor: 'red', // Border color when focused
+          },
+        },
+        // '& .MuiInputLabel-root': {
+        //   color: 'purple', // Change label color
+        // },
+        '& .MuiInputBase-input': {
+          color: 'black', // Input text color
+        },
+  }
+}
+
 const FormComponentTable = (props) => {
   const {
     fieldList,
@@ -69,34 +103,33 @@ const FormComponentTable = (props) => {
     open: false,
     index: 0,
     sectionNo: 0,
-    data: [{
-      index: 1, 
-      value: ''
-    }],
+    data: [
+      {
+        index: 1,
+        value: "",
+      },
+    ],
   });
 
   const handleDropdownChange = (item, index, event) => {
     let dataArr = JSON.parse(JSON.stringify(openDialog));
-    dataArr.data[index - 1].value = event.target.value
-    setOpenDialog(dataArr)
-  }
+    dataArr.data[index - 1].value = event.target.value;
+    setOpenDialog(dataArr);
+  };
 
   const handleAddDropdown = (index) => {
     let dataObj = JSON.parse(JSON.stringify(openDialog));
-    if(index === dataObj.data.length) {
+    if (index === dataObj.data.length) {
       dataObj.data.push({
-        index: index + 1, 
-        value: ''
-      })
+        index: index + 1,
+        value: "",
+      });
       setOpenDialog(dataObj);
     } else {
-      
     }
-  }
+  };
 
-  const handleDeleteDropdown = () => {
-
-  }
+  const handleDeleteDropdown = () => {};
 
   return (
     <>
@@ -124,7 +157,13 @@ const FormComponentTable = (props) => {
           {openDialog.data &&
             openDialog.data.map((item, index) => (
               <Box key={index}>
-                <TextField size="small" value={item.value} onChange={(event) => handleDropdownChange(item, item.index, event)} />
+                <TextField
+                  size="small"
+                  value={item.value}
+                  onChange={(event) =>
+                    handleDropdownChange(item, item.index, event)
+                  }
+                />
                 <Tooltip title={"Add new row"}>
                   <AddCircleOutlineRoundedIcon
                     sx={{ cursor: "pointer" }}
@@ -134,7 +173,9 @@ const FormComponentTable = (props) => {
                 {item.index !== 1 && (
                   <Tooltip title={"Delete new row"}>
                     <DeleteOutlineRoundedIcon
-                      onClick={() => handleDeleteDropdown(field.index, sectionNo)}
+                      onClick={() =>
+                        handleDeleteDropdown(field.index, sectionNo)
+                      }
                       sx={{ cursor: "pointer" }}
                     />
                   </Tooltip>
@@ -143,7 +184,11 @@ const FormComponentTable = (props) => {
             ))}
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" autoFocus onClick={() => handleSaveDropdown(openDialog)}>
+          <Button
+            variant="contained"
+            autoFocus
+            onClick={() => handleSaveDropdown(openDialog)}
+          >
             Save
           </Button>
         </DialogActions>
@@ -171,8 +216,9 @@ const FormComponentTable = (props) => {
                 <StyledTableCell>
                   <TextField
                     size="small"
+                    sx={style.textField}
                     fullWidth
-                    label="Field Name"
+                    // label="Field Name"
                     name="fieldName"
                     value={field.fieldName}
                     onChange={(event) =>
@@ -181,14 +227,14 @@ const FormComponentTable = (props) => {
                   />
                 </StyledTableCell>
                 <StyledTableCell>
-                  <FormControl size="small" fullWidth>
-                    <InputLabel id="demo-simple-select-label">
+                  <FormControl sx={style.textField} size="small" fullWidth>
+                    {/* <InputLabel id="demo-simple-select-label">
                       Select Form Type
-                    </InputLabel>
+                    </InputLabel> */}
                     <Select
                       name="fieldType"
                       value={field.fieldType}
-                      label="Select Form Type"
+                      // label="Select Form Type"
                       onChange={(event) =>
                         handleChange(event, field.index, sectionNo)
                       }
@@ -200,14 +246,14 @@ const FormComponentTable = (props) => {
                   </FormControl>
                 </StyledTableCell>
                 <StyledTableCell>
-                  <FormControl size="small" fullWidth>
-                    <InputLabel id="demo-simple-select-label">
+                  <FormControl sx={style.textField} size="small" fullWidth>
+                    {/* <InputLabel id="demo-simple-select-label">
                       Required
-                    </InputLabel>
+                    </InputLabel> */}
                     <Select
                       name="required"
                       value={field.required}
-                      label="Select Required"
+                      // label="Select Required"
                       onChange={(event) =>
                         handleChange(event, field.index, sectionNo)
                       }
@@ -220,14 +266,14 @@ const FormComponentTable = (props) => {
 
                 {/* Authentication */}
                 <StyledTableCell>
-                  <FormControl size="small" fullWidth>
-                    <InputLabel id="demo-simple-select-label">
+                  <FormControl sx={style.textField} size="small" fullWidth>
+                    {/* <InputLabel id="demo-simple-select-label">
                       Select Authentication
-                    </InputLabel>
+                    </InputLabel> */}
                     <Select
                       name="authentication"
                       value={field.authentication}
-                      label="Select Authentication"
+                      // label="Select Authentication"
                       onChange={(event) =>
                         handleChange(event, field.index, sectionNo)
                       }

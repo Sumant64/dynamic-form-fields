@@ -16,6 +16,38 @@ import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRou
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import { getConfigForm, postConfigForm } from "@/services/api";
 
+const style = {
+  textField: {
+    '& .MuiInputBase-root': {
+          borderRadius: '10px', // Border radius
+          height: '40px',
+          padding: '0px',
+          margin: '0px',
+          fontSize: '14px'
+
+        },
+        '& .MuiOutlinedInput-root': {
+          '& fieldset': {
+            // borderColor: 'blue', // Change border color
+            margin: '0px',
+            height: '40px',
+          },
+          '&:hover fieldset': {
+            borderColor: 'green', // Border color on hover
+          },
+          '&.Mui-focused fieldset': {
+            borderColor: 'red', // Border color when focused
+          },
+        },
+        // '& .MuiInputLabel-root': {
+        //   color: 'purple', // Change label color
+        // },
+        '& .MuiInputBase-input': {
+          color: 'black', // Input text color
+        },
+  }
+}
+
 const DynamicForm = () => {
   const [fieldList, setFieldList] = useState([
     {
@@ -41,7 +73,8 @@ const DynamicForm = () => {
   const [loading, setLoading] = useState('loading');
 
   useEffect(() => {
-    initialLoad();
+    // initialLoad();
+    setLoading('')
   }, []);
 
   const initialLoad = async () => {
@@ -260,12 +293,13 @@ const DynamicForm = () => {
       <Box sx={{ marginTop: "2rem" }}>
         {loading === "" && fieldList.map((item) => {
           return (
-            <>
-              <Divider sx={{ margin: "1rem" }} />
-              <Box sx={{ display: "flex", width: "100%", marginTop: "2rem" }}>
+            <Box sx={{border: '1px solid grey', padding: '2rem', margin: '2rem', borderRadius: '20px'}}>
+              <Box sx={{ display: "flex", width: "100%"}}>
                 <TextField
+                  size="small"
                   name="sectionName"
                   label="Section Name"
+                  sx={style.textField}
                   value={item.sectionName}
                   onChange={(event) =>
                     handleSectionChange(event, item.sectionNo)
@@ -301,7 +335,7 @@ const DynamicForm = () => {
                 handleDeleteRow={handleDeleteRow}
                 handleSaveDropdown={handleSaveDropdown}
               />
-            </>
+            </Box>
           );
         })}
       </Box>
