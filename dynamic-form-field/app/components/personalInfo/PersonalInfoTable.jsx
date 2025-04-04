@@ -30,6 +30,7 @@ const PersonalInfoTable = ({ columns, page, rowsPerPage, count, rows, setPage, s
   }
 
   const handleSort = (item) => {
+    console.log(item)
       if(item === sort.field) {
         setSort({field: item, value: sort.value === "asc" ? "desc" : "asc"})
       } else {
@@ -48,12 +49,12 @@ const PersonalInfoTable = ({ columns, page, rowsPerPage, count, rows, setPage, s
                 columns.length > 0 && columns.map((item, index) => {
                   if (item.display) {
                     return (
-                      <StyledTableCell key={index} sx={{ cursor: 'pointer' }} onClick={() => handleSort(item.field)}>
+                      <StyledTableCell key={index} sx={{ cursor: 'pointer' }} onClick={() => handleSort(item.id)}>
                         <Tooltip title="Click to Sort Column">
                           <div>
                               {item.field}
-                              {sort.field === item.field && sort.value === "asc" && <SouthIcon sx={{position: 'relative', top: '2px', marginLeft: '5px', fontSize: '15px'}} /> }
-                              {sort.field === item.field && sort.value === "desc" && <NorthIcon sx={{position: 'relative', top: '2px', marginLeft: '5px', fontSize: '15px'}} />}
+                              {sort.field === item.id && sort.value === "asc" && <SouthIcon sx={{position: 'relative', top: '2px', marginLeft: '5px', fontSize: '15px'}} /> }
+                              {sort.field === item.id && sort.value === "desc" && <NorthIcon sx={{position: 'relative', top: '2px', marginLeft: '5px', fontSize: '15px'}} />}
                           </div>
                         </Tooltip>
                       </StyledTableCell>
