@@ -20,3 +20,8 @@ export const getConfigForm = () => {
 export const postPersonalInfo = (payload) => {
   return axios.post(`${baseUrl}/api/personal-info`, payload, config)
 }
+
+export const getPersonalInfo = (params) => {
+  const {rowsPerPage, page, search, sort} = params;
+  return axios.get(`${baseUrl}/api/personal-info?row-per-page=${rowsPerPage}&page=${page}&search=${search}&sort=${sort}`)
+}
