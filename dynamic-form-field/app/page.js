@@ -2,12 +2,15 @@
 import { useEffect, useState } from "react";
 import PersonalInfoTable from "./components/personalInfo/PersonalInfoTable";
 import { getConfigForm, getPersonalInfo } from "@/services/api";
-import { Box, Button, Dialog, InputBase, Paper } from "@mui/material";
+import { Box, Button, Dialog, InputBase, Paper, Tooltip } from "@mui/material";
 import ColumnFilterDialog from "./components/personalInfo/ColumnFilterDialog";
 import { CiFilter } from "react-icons/ci";
 import SearchIcon from "@mui/icons-material/Search";
+import { IoAddSharp } from "react-icons/io5";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [columns, setColumns] = useState([]);
   const [rows, setRows] = useState([]);
@@ -98,6 +101,14 @@ export default function Home() {
     initialLoad(searchValue, 1, 10);
   };
 
+  const handleAddInfo = () => {
+    router.push("/personal-info");
+  }
+
+  const handleEditInfo = (id) => {
+    router.push(`/personal-info?id=${id}`)
+  }
+
   return (
     <>
       {/* Columns filter dialog */}
@@ -130,10 +141,24 @@ export default function Home() {
               sx={{
                 cursor: "pointer",
                 padding: "4px 10px",
+                 borderRight: '1px solid black'
               }}
               onClick={() => setOpenDialog("filter")}
             >
-              <CiFilter style={{position: 'relative', top: '20%'}} />
+              <Tooltip title="Filter Columns">
+                <CiFilter style={{position: 'relative', top: '20%'}} />
+              </Tooltip>
+            </Box>
+            <Box
+              sx={{
+                cursor: "pointer",
+                padding: "4px 10px",
+              }}
+              onClick={() => handleAddInfo()}
+            >
+              <Tooltip title="Add Info">
+                <IoAddSharp style={{position: 'relative', top: '20%'}} />
+              </Tooltip>
             </Box>
           </Box>
 
@@ -188,6 +213,7 @@ export default function Home() {
             count={count}
             rowsPerPage={rowsPerPage}
             rows={rows}
+            handleEditInfo={handleEditInfo}
           />
         )}
       </Box>

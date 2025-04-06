@@ -3,7 +3,7 @@ import React from "react";
 import SouthIcon from '@mui/icons-material/South';
 import NorthIcon from '@mui/icons-material/North';
 
-const PersonalInfoTable = ({ columns, page, rowsPerPage, count, rows, setPage, setRowsPerPage, sort, setSort }) => {
+const PersonalInfoTable = ({ columns, page, rowsPerPage, count, rows, setPage, setRowsPerPage, sort, setSort, handleEditInfo }) => {
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: '#1e6091',
@@ -69,9 +69,8 @@ const PersonalInfoTable = ({ columns, page, rowsPerPage, count, rows, setPage, s
           <TableBody>
             {
                 rows?.length > 0 && rows.map((row, index) => {
-                    console.log(row)
                     return (
-                        <StyledTableRow key={index}>
+                        <StyledTableRow sx={{cursor: 'pointer'}} onClick={() => handleEditInfo(row._id)} key={index}>
                             {
                                 columns.length > 0 && columns.map((column) => column.display && <StyledTableCell>{row.personalInfo[column.id]}</StyledTableCell>)
                             }
