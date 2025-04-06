@@ -84,10 +84,10 @@ const PersonalInfo = () => {
           <Box
             sx={{
               border: "1px solid #f2705970",
-              padding: "2rem",
+              padding: {xs: "1rem", md: "2rem"},
               backgroundColor: "white",
               borderRadius: "20px",
-              margin: "2rem",
+              margin: {xs: "5px", md: "2rem"},
             }}
           >
             <Typography
@@ -104,7 +104,7 @@ const PersonalInfo = () => {
             <Grid container columns={12} spacing={2}>
               {item.sectionFields &&
                 item.sectionFields.map((field) => (
-                  <Grid size={3}>
+                  <Grid size={{xs: 12, md: 3}}>
                     {(field.fieldType === "text" ||
                       field.fieldType === "date" ||
                       field.fieldType === "number"
@@ -134,8 +134,8 @@ const PersonalInfo = () => {
           </Box>
         ))}
 
-      <Box sx={{ marginTop: "1rem" }}>
-        <Button variant="contained" onClick={() => handleSubmit()}>
+      <Box sx={{ marginTop: "1rem", paddingLeft: {xs: '10px', md: '2rem'} }}>
+        <Button variant="contained" sx={{backgroundColor: '#1e6091', borderRadius: '10px'}} onClick={() => handleSubmit()}>
           Submit
         </Button>
       </Box>
