@@ -294,7 +294,7 @@ const DynamicForm = () => {
       <Box sx={{ marginTop: "2rem" }}>
         {loading === "" && fieldList.map((item) => {
           return (
-            <Box sx={{border: '1px solid #f27059', padding: '2rem', margin: '2rem', borderRadius: '20px', backgroundColor: 'white'}}>
+            <Box sx={{border: '1px solid #f2705970', padding: '2rem', margin: '2rem', borderRadius: '20px', backgroundColor: 'white'}}>
               <Box sx={{ display: "flex", width: "100%"}}>
                 <TextField
                   size="small"

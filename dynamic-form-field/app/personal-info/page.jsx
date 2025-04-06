@@ -4,26 +4,60 @@ import React, { useEffect, useState } from "react";
 import { dynamicData } from "../components/sampelObject";
 import { getConfigForm, postPersonalInfo } from "@/services/api";
 
+const style = {
+  textField: {
+    "& .MuiInputBase-root": {
+      borderRadius: "10px", // Border radius
+      height: "40px",
+      padding: "0px",
+      margin: "0px",
+      fontSize: "14px",
+    },
+    "& .MuiInputBase-input::placeholder": {
+      fontSize: "12px", // Change placeholder font size here
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        // borderColor: 'blue', // Change border color
+        margin: "0px",
+        height: "40px",
+      },
+      "&:hover fieldset": {
+        borderColor: "#90a955", // Border color on hover
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "#f27059", // Border color when focused
+      },
+    },
+    // '& .MuiInputLabel-root': {
+    //   color: 'purple', // Change label color
+    // },
+    "& .MuiInputBase-input": {
+      color: "black", // Input text color
+    },
+  },
+};
+
 const PersonalInfo = () => {
   const [formConfig, setFormConfig] = useState([]);
-  const [loading, setLoading] = useState('loading');
+  const [loading, setLoading] = useState("loading");
   const [formValues, setFormValues] = useState({});
 
   useEffect(() => {
     initialLoad();
-  }, [])
+  }, []);
 
-  const initialLoad = async() => {
-    try{
+  const initialLoad = async () => {
+    try {
       const res = await getConfigForm();
       let data = res.data.result[0];
-      setFormConfig(data.formConfig)
-      setLoading('')
-    } catch(err) {
+      setFormConfig(data.formConfig);
+      setLoading("");
+    } catch (err) {
       console.log(err);
-      setLoading('networkError')
+      setLoading("networkError");
     }
-  }
+  };
 
   const handleChange = (event) => {
     let values = JSON.parse(JSON.stringify(formValues));
@@ -31,12 +65,11 @@ const PersonalInfo = () => {
     setFormValues(values);
   };
 
-  const handleSubmit = async() => {
-    try{
+  const handleSubmit = async () => {
+    try {
       console.log(formValues);
       const res = await postPersonalInfo(formValues);
-
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
   };
@@ -45,38 +78,61 @@ const PersonalInfo = () => {
     <>
       <Typography variant="h3">Personal Info</Typography>
 
-      {loading === '' && formConfig.length > 0 && formConfig.map((item) => (
-        <Box sx={{paddingTop: '2rem'}}>
-          <Typography variant="h6" sx={{paddingBottom: '1rem', textDecoration: 'underline'}}>{item.sectionName}</Typography>
-          <Grid container columns={12} spacing={2}>
-          {
-            item.sectionFields && item.sectionFields.map((field) => (
-              <Grid size={3}>
-                {(field.fieldType === "text" || field.fieldType === "date") && (
-                  <TextField
-                    size="small"
-                    fullWidth
-                    name={field._id}
-                    label={field.fieldName}
-                    required={field.required === "true" ? true : false}
-                    InputLabelProps={{
-                      shrink:
+      {loading === "" &&
+        formConfig.length > 0 &&
+        formConfig.map((item) => (
+          <Box
+            sx={{
+              border: "1px solid #f2705970",
+              padding: "2rem",
+              backgroundColor: "white",
+              borderRadius: "20px",
+              margin: "2rem",
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                marginBottom: "1rem",
+                backgroundColor: "#219ebc",
+                color: "#fff",
+                paddingLeft: "1rem",
+              }}
+            >
+              {item.sectionName}
+            </Typography>
+            <Grid container columns={12} spacing={2}>
+              {item.sectionFields &&
+                item.sectionFields.map((field) => (
+                  <Grid size={3}>
+                    {(field.fieldType === "text" ||
                       field.fieldType === "date" ||
-                        (formValues[field.fieldName] && true), // Keeps the label at the top
-                    }}
-                    type={field.fieldType}
-                    value={
-                      formValues[field._id] ? formValues[field._id] : ""
-                    }
-                    onChange={handleChange}
-                  />
-                )}
-              </Grid>
-            ))
-          }
-          </Grid>
-        </Box>
-      ))}
+                      field.fieldType === "number"
+                      ) && (
+                      <TextField
+                        size="small"
+                        sx={style.textField}
+                        fullWidth
+                        name={field._id}
+                        label={field.fieldName}
+                        required={field.required === "true" ? true : false}
+                        InputLabelProps={{
+                          shrink:
+                            field.fieldType === "date" ||
+                            (formValues[field.fieldName] && true), // Keeps the label at the top
+                        }}
+                        type={field.fieldType}
+                        value={
+                          formValues[field._id] ? formValues[field._id] : ""
+                        }
+                        onChange={handleChange}
+                      />
+                    )}
+                  </Grid>
+                ))}
+            </Grid>
+          </Box>
+        ))}
 
       <Box sx={{ marginTop: "1rem" }}>
         <Button variant="contained" onClick={() => handleSubmit()}>
