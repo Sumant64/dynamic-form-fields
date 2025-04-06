@@ -1,5 +1,5 @@
 "use client";
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import { Box, Button, Divider, Grid, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { dynamicData } from "../components/sampelObject";
 import { getConfigForm, postPersonalInfo } from "@/services/api";
@@ -76,7 +76,8 @@ const PersonalInfo = () => {
 
   return (
     <>
-      <Typography variant="h3">Personal Info</Typography>
+      <Typography variant="h5" sx={{color: '#1e6091'}}>PERSONAL INFO</Typography>
+      <Divider sx={{backgroundColor: '#000'}} />
 
       {loading === "" &&
         formConfig.length > 0 &&

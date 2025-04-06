@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import PersonalInfoTable from "./components/personalInfo/PersonalInfoTable";
 import { getConfigForm, getPersonalInfo } from "@/services/api";
-import { Box, Button, Dialog, InputBase, Paper, Tooltip } from "@mui/material";
+import { Box, Button, Dialog, Divider, InputBase, Paper, Tooltip, Typography } from "@mui/material";
 import ColumnFilterDialog from "./components/personalInfo/ColumnFilterDialog";
 import { CiFilter } from "react-icons/ci";
 import SearchIcon from "@mui/icons-material/Search";
@@ -119,6 +119,9 @@ export default function Home() {
           setOpenDialog={setOpenDialog}
         />
       </Dialog>
+
+      <Typography variant="h5" sx={{color: '#1e6091'}}>DASHBOARD</Typography>
+      <Divider sx={{backgroundColor: '#000'}} />
 
       <Box paddingTop={"20px"}>
         {/* Options Container */}

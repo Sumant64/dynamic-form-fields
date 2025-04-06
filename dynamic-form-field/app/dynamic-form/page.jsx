@@ -282,7 +282,8 @@ const DynamicForm = () => {
 
   return (
     <Box>
-      <Typography>Dynamic Form</Typography>
+            <Typography variant="h5" sx={{color: '#1e6091'}}>CONFIGURE FORM</Typography>
+            <Divider sx={{backgroundColor: '#000'}} />
 
       {/* {
         fieldList.map((field) => (
