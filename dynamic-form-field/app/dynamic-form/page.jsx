@@ -14,7 +14,7 @@ import FormComponent from "../components/dynamicForm/FormComponent";
 import FormComponentTable from "../components/dynamicForm/FormComponentTable";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
-import { getConfigForm, postConfigForm } from "@/services/api";
+import { getConfigForm, patchConfigForm, postConfigForm } from "@/services/api";
 
 const style = {
   textField: {
@@ -71,6 +71,7 @@ const DynamicForm = () => {
     },
   ]);
   const [loading, setLoading] = useState('loading');
+  const [isEdit, setIsEdit] = useState({status: false, id: ''});
 
   useEffect(() => {
     initialLoad();
@@ -81,7 +82,9 @@ const DynamicForm = () => {
       const res = await getConfigForm();
       let data = res.data.result[0];
       if(data?.formConfig.length > 0) {
+        
         setFieldList(data.formConfig);
+        setIsEdit({status: true, id: data._id});
       }
       setLoading("");
     } catch (err) {
@@ -189,9 +192,13 @@ const DynamicForm = () => {
 
   const handleSubmit = async () => {
     try {
-      console.log(fieldList);
-      const res = await postConfigForm(fieldList);
-      console.log(res);
+      if(isEdit.status) {
+        console.log(fieldList)
+        const res = await patchConfigForm(fieldList, isEdit.id);
+      } else {
+        const res = await postConfigForm(fieldList);
+      }
+      // console.log(res);
     } catch (err) {
       console.log(err);
     }

@@ -25,3 +25,7 @@ export const getPersonalInfo = (params) => {
   const {rowsPerPage, page, search, sort} = params;
   return axios.get(`${baseUrl}/api/personal-info?row-per-page=${rowsPerPage}&page=${page}&search=${search}&sort=${sort}`)
 }
+
+export const patchConfigForm = (payload, id) => {
+  return axios.patch(`${baseUrl}/api/config/patchconfig/${id}`, payload, config);
+}
